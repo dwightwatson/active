@@ -1,6 +1,8 @@
 Active for Laravel 4
 ====================
 
+[![Build Status](https://travis-ci.org/dwightwatson/active.png?branch=master)](https://travis-ci.org/dwightwatson/active)
+
 Active is a helper package built specifically for Laravel 4 that will allow you to recognise the current route, which is helpful for adding 'active' classes (like those used by Bootstrap) and for only performing certain actions on given routes. It also includes helper functions for retrieving the current controller and action names. Inspired by [digithis/activehelper](https://github.com/digithis/activehelper) but written from the ground up to better fit our needs as well as throw in some testing.
 
 ## Installation

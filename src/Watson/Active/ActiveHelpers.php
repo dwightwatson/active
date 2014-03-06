@@ -9,7 +9,7 @@ if ( ! function_exists('controller_name'))
 	{
         if ($action = Route::currentRouteAction())
         {
-            $controller = Str::parseCallback($action, null)[0];   
+            $controller = head(Str::parseCallback($action, null));
 
             // Remove 'controller' from the controller name.
             return Str::lower(str_replace('Controller', '', $controller));
@@ -25,7 +25,7 @@ if ( ! function_exists('action_name'))
 	{
         if ($action = Route::currentRouteAction())
         {
-            $action = Str::parseCallback($action, null)[1];
+            $action = last(Str::parseCallback($action, null));
 
             // Take out the method from the action.
             return Str::lower(str_replace(array('get', 'post', 'patch', 'put', 'delete'), '', $action));
