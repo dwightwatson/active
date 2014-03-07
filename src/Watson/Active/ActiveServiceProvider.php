@@ -18,12 +18,20 @@ class ActiveServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->package('watson/active');
-
 		$this->app->bind('active', function()
 		{
 			return new \Watson\Active\Active($app['request'], $app['router']);
 		});
+	}
+
+	/**
+	 * Boot the service provider.
+	 * 
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->package('watson/active');
 	}
 
 	/**
