@@ -52,7 +52,7 @@ class Active
 		foreach ($this->routes as $route) 
 		{
 			// If the current route isn't the requested route, break.
-			if ( ! $this->matchesPath($route)) continue;
+			if ( ! $this->request->is($route)) continue;
 
 			foreach ($this->excludedRoutes as $excludedRoute) 
 			{
@@ -115,25 +115,6 @@ class Active
 		}
 
 		return null;
-	}
-
-	/**
-	 * Determine if the current request URI matches a pattern.
-	 *
-	 * @param  dynamic  string
-	 * @return bool
-	 */
-	public function matchesPath()
-	{
-		foreach (func_get_args() as $pattern)
-		{
-			if (str_is($pattern, urldecode($this->request->path())))
-			{
-				return true;
-			}
-		}
-
-		return false;
 	}
 
 	/**
