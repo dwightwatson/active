@@ -18,7 +18,7 @@ class ActiveServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		$this->app->bind('active', function()
+		$this->app->bind('active', function($app)
 		{
 			return new \Watson\Active\Active($app['request'], $app['router']);
 		});
@@ -26,7 +26,7 @@ class ActiveServiceProvider extends ServiceProvider {
 
 	/**
 	 * Boot the service provider.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function boot()

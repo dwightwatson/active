@@ -49,16 +49,16 @@ class Active
 	{
 		$this->parseRoutes($routes);
 
-		foreach ($this->routes as $route) 
+		foreach ($this->routes as $route)
 		{
 			// If the current route isn't the requested route, break.
 			if ( ! $this->request->is($route)) continue;
 
-			foreach ($this->excludedRoutes as $excludedRoute) 
+			foreach ($this->excludedRoutes as $excludedRoute)
 			{
 				// If the requested route is one of the excluded routes
 				// break.
-				if (str_is($excludedRoute, $this->request->path())) 
+				if (str_is($excludedRoute, $this->request->path()))
 				{
 					return false;
 				}
@@ -96,14 +96,14 @@ class Active
 		// If we're not on a named route, return null.
 		if ( ! $this->router->current()) return null;
 
-		if (is_array($route)) 
+		if (is_array($route))
 		{
-			foreach ($routs as $route) 
+			foreach ($route as $route)
 			{
-				if ($this->router->current()->getName() == $routes)
+				if ($this->router->current()->getName() == $route)
 				{
 					return $class;
-				}	
+				}
 			}
 		}
 		else
@@ -111,7 +111,7 @@ class Active
 			if ($this->router->current()->getName() == $route)
 			{
 				return $class;
-			}	
+			}
 		}
 
 		return null;
@@ -119,7 +119,7 @@ class Active
 
 	/**
 	 * Process single routes and arrays of routes.
-	 * 
+	 *
 	 * @param  mixed  $route
 	 * @return void
 	 */
