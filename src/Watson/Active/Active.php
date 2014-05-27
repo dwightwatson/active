@@ -40,39 +40,6 @@ class Active
 	}
 
 	/**
-	 * Get current state.
-	 *
-	 * @param  string | array  $routes
-	 * @return boolean
-	 */
-	public function is($routes)
-	{
-		$this->parseRoutes($routes);
-
-		foreach ($this->routes as $route)
-		{
-			// If the current route isn't the requested route, break.
-			if ( ! $this->request->is($route)) continue;
-
-			foreach ($this->excludedRoutes as $excludedRoute)
-			{
-				// If the requested route is one of the excluded routes
-				// break.
-				if (str_is($excludedRoute, $this->request->path()))
-				{
-					return false;
-				}
-			}
-
-			// The current route matches the requested route.
-			return true;
-		}
-
-		// No routes matched the requested route.
-		return false;
-	}
-
-	/**
 	 * Return active class if paths are matched.
 	 *
 	 * @param  string | array  $paths
@@ -81,80 +48,18 @@ class Active
 	 */
 	public function path($paths, $class = 'active')
 	{
-		return $this->is($paths) ? $class : null;
+		return $this->request->is($paths) ? $class : null;
 	}
 
 	/**
 	 * Return active class if route names are matched.
 	 *
-	 * @param  string | array  $route
+	 * @param  string | array  $routes
 	 * @param  string  $class
 	 * @return mixed
 	 */
-	public function route($route, $class = 'active')
+	public function route($routes, $class = 'active')
 	{
-		// If we're not on a named route, return null.
-		if ( ! $this->router->current()) return null;
-
-		if (is_array($route))
-		{
-			foreach ($route as $route)
-			{
-				if ($this->router->current()->getName() == $route)
-				{
-					return $class;
-				}
-			}
-		}
-		else
-		{
-			if ($this->router->current()->getName() == $route)
-			{
-				return $class;
-			}
-		}
-
-		return null;
+        return $this->router->is($routes) ? $class : null;
 	}
-
-	/**
-	 * Process single routes and arrays of routes.
-	 *
-	 * @param  mixed  $route
-	 * @return void
-	 */
-	protected function parseRoutes($route)
-    {
-    	if (is_array($route))
-    	{
-    		foreach ($route as $route)
-    		{
-    			$this->parseRoute($route);
-    		}
-    	}
-    	else
-    	{
-	    	$this->parseRoute($route);
-		}
-    }
-
-    /**
-     * Separate excluded routes from those to be accepted.
-     *
-     * @param  string  $route
-     * @return void
-     */
-    protected function parseRoute($route)
-    {
-    	if (Str::startsWith($route, 'not:'))
-    	{
-    	    $excludedRoute = substr($route, strpos($route, 'not:') + 4);
-
-    	    $this->excludedRoutes[] = $excludedRoute;
-    	}
-    	else
-    	{
-    	    $this->routes[] = $route;
-    	}
-    }
 }

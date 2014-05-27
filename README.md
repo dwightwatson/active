@@ -3,15 +3,17 @@ Active for Laravel 4
 
 [![Build Status](https://travis-ci.org/dwightwatson/active.png?branch=master)](https://travis-ci.org/dwightwatson/active)
 
-Active is a helper package built specifically for Laravel 4 that will allow you to recognise the current route, which is helpful for adding 'active' classes (like those used by Bootstrap) and for only performing certain actions on given routes. It also includes helper functions for retrieving the current controller and action names. Inspired by [digithis/activehelper](https://github.com/digithis/activehelper) but written from the ground up to better fit our needs as well as throw in some testing.
+Active is a helper package built specifically for Laravel 4.2+ that will allow you to recognise the current route, which is helpful for adding 'active' classes (like those used by Bootstrap) and for only performing certain actions on given routes. It also includes helper functions for retrieving the current controller and action names. Inspired by [digithis/activehelper](https://github.com/digithis/activehelper) but written from the ground up to better fit our needs as well as throw in some testing.
 
 ## Installation
 
 Simply pop this in your `composer.json` file and run `composer update` (however your Composer is installed).
 
 ```
-"watson/active": "1.0.*"
+"watson/active": "2.0.*"
 ```
+
+_If you want to use Active with Laravel 4.0 - 4.1 then specify version `1.0.*` instead._
 
 Now, add the Autologin service provider to your `app/config/app.php` file.
 
@@ -27,17 +29,7 @@ There are two ways you can use Active, first by passing in paths and second by p
 
 ### Using paths
 
-If you want to see if the current request is a particular route or not, simply use the `is()` method.
-
-    // On /posts/1
-    Active::is('posts/1'); // true
-
-Or, you can pass in an array.
-
-    // On /posts/1
-    Active::is(array('posts/1', 'posts/2', 'users/1')); // true
-
-Now, what if you want to know whether you're on a path for the purpose of activating a CSS class? Well, you're sorted. By default, it will return the string 'active', so you can use it as a class.
+What if you want to know whether you're on a path for the purpose of activating a CSS class? Well, you're sorted. By default, it will return the string 'active', so you can use it as a class.
 
     // On /posts/1
     Active::path('posts/1'); // active
