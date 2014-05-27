@@ -27,5 +27,5 @@
             "src/Watson/Active/ActiveHelpers.php"
         ]
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "beta"
 }
