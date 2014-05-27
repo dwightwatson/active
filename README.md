@@ -10,7 +10,7 @@ Active is a helper package built specifically for Laravel 4.2+ that will allow y
 Simply pop this in your `composer.json` file and run `composer update` (however your Composer is installed).
 
 ```
-"watson/active": "2.0.*"
+"watson/active": "1.2.*"
 ```
 
 _If you want to use Active with Laravel 4.0 - 4.1 then specify version `1.0.*` instead._
