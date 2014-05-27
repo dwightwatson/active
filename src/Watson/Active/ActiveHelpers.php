@@ -5,11 +5,14 @@ use Illuminate\Support\Str;
 
 if ( ! function_exists('controller_name'))
 {
-	function controller_name()
+	function controller_name($includeNamespace = true)
 	{
         if ($action = Route::currentRouteAction())
         {
             $controller = head(Str::parseCallback($action, null));
+
+            // Either separate out the namespaces or remove them.
+            $controller = $includeNamespace ? str_replace('\\', ' ', $controller) : substr(strrchr($controller, '\\'), 1);
 
             // Remove 'controller' from the controller name.
             return Str::lower(str_replace('Controller', '', $controller));

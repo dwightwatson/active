@@ -11,7 +11,25 @@ class ActiveHelpersTest extends PHPUnit_Framework_TestCase
         $result = controller_name();
 
         $this->assertEquals('foo', $result, "Does not get correct controller name.");
-    }	
+    }
+
+    public function testControllerNameGetsControllerWithNamespaces()
+    {
+        Route::shouldReceive('currentRouteAction')->once()->andReturn('Baz\FooController@bar');
+
+        $result = controller_name();
+
+        $this->assertEquals('baz foo', $result, "Does not get the correct namespaced controller name,");
+    }
+
+    public function testControllerNameGetsControllerWithoutNamespaces()
+    {
+        Route::shouldReceive('currentRouteAction')->once()->andReturn('Baz\FooController@bar');
+
+        $result = controller_name(false);
+
+        $this->assertEquals('foo', $result, "Does not get the correct namespaced controller name.");
+    }
 
     public function testControllerNameWorksWhenNotOnController()
     {
