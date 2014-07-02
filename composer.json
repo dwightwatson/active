@@ -24,7 +24,7 @@
             "Watson\\Active\\": "src/"
         },
         "files": [
-            "src/Watson/Active/ActiveHelpers.php"
+            "src/ActiveHelpers.php"
         ]
     },
     "minimum-stability": "stable"
