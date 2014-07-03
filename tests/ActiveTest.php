@@ -77,4 +77,38 @@ class ActiveTest extends PHPUnit_Framework_TestCase
 
         $this->assertNull($result, "Null is not returned when route is not matched.");
     }
+
+
+    public function testResourceWithCurrentRoute()
+    {
+        $this->router->shouldReceive('is')->andReturn(true);
+
+        $this->router->shouldReceive('current')
+            ->andReturn(Mockery::mock(['parameters' => 1]));
+
+        $result = $this->active->resource('posts.show', 1);
+
+        $this->assertEquals('active', $result, "Class is not returned when resource is matched.");
+    }
+
+    public function testResourceWithoutCurrentRoute()
+    {
+        $this->router->shouldReceive('is')->andReturn(true);
+
+        $this->router->shouldReceive('current')
+            ->andReturn(Mockery::mock(['parameters' => 2]));
+
+        $result = $this->active->resource('posts.show', 1);
+
+        $this->assertNull($result, "Null is not returned when resource is matched.");
+    }
+
+    public function testResourceWithoutNoRoute()
+    {
+        $this->router->shouldReceive('is')->andReturn(false);
+
+        $result = $this->active->resource('posts.show', 1);
+
+        $this->assertNull($result, "Null is not returned when resource is not matched.");
+    }
 }

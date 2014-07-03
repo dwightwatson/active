@@ -42,8 +42,8 @@ class Active
 	/**
 	 * Return active class if paths are matched.
 	 *
-	 * @param  string | array  $paths
-	 * @param  string  $class
+	 * @param  mixed  $paths
+	 * @param  string $class
 	 * @return mixed
 	 */
 	public function path($paths, $class = 'active')
@@ -54,12 +54,32 @@ class Active
 	/**
 	 * Return active class if route names are matched.
 	 *
-	 * @param  string | array  $routes
-	 * @param  string  $class
+	 * @param  mixed  $routes
+	 * @param  string $class
 	 * @return mixed
 	 */
 	public function route($routes, $class = 'active')
 	{
         return $this->router->is($routes) ? $class : null;
+	}
+
+	/**
+	 * Return active class if route name and identifier is matched.
+	 *
+	 * @param  string $route
+	 * @param  string $identifier
+	 * @param  string $attribute
+	 * @param  string $class
+	 * @return mixed
+	 */
+	public function resource($route, $identifier, $attribute = 'id', $class = 'active')
+	{
+		if ($this->route($route))
+		{
+			if ($this->router->current()->parameters($attribute) == $identifier)
+			{
+				return $class;
+			}
+		}
 	}
 }
