@@ -48,7 +48,7 @@ class Active
 	 */
 	public function path($paths, $class = 'active')
 	{
-		return $this->request->is($paths) ? $class : null;
+		return call_user_func_array([$this->request, 'is'], (arraY) $paths) ? $class : null;
 	}
 
 	/**
@@ -60,7 +60,7 @@ class Active
 	 */
 	public function route($routes, $class = 'active')
 	{
-        return $this->router->is($routes) ? $class : null;
+		return call_user_func_array([$this->router, 'is'], (array) $routes) ? $class : null;
 	}
 
 	/**
