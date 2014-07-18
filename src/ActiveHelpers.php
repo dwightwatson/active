@@ -11,11 +11,17 @@ if ( ! function_exists('controller_name'))
         {
             $controller = head(Str::parseCallback($action, null));
 
+            // Remove Controller from the controller name.
+            $controller = str_replace('Controller', '', $controller);
+
+            // Separate out nested controller resources.
+            $controller = str_replace('_', ' ', snake_case($controller));
+
             // Either separate out the namespaces or remove them.
-            $controller = $includeNamespace ? str_replace('\\', ' ', $controller) : substr(strrchr($controller, '\\'), 1);
+            $controller = $includeNamespace ? str_replace('\\', '', $controller) : substr(strrchr($controller, '\\'), 1);
 
             // Remove 'controller' from the controller name.
-            return Str::lower(str_replace('Controller', '', $controller));
+            return trim($controller);
         }
 
         return null;
