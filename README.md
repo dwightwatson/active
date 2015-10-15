@@ -1,5 +1,5 @@
-Active for Laravel 4/5
-======================
+Active for Laravel
+==================
 
 [![Build Status](https://travis-ci.org/dwightwatson/active.png?branch=master)](https://travis-ci.org/dwightwatson/active)
 
@@ -7,21 +7,19 @@ Active is a helper package built specifically for Laravel 4.2/5+ that will allow
 
 ## Installation
 
-Simply pop this in your `composer.json` file and run `composer update` (however your Composer is installed).
+First, simply require the package through Composer.
 
+```sh
+composer require watson/active
 ```
-"watson/active": "1.3.*"
-```
 
-_If you want to use Active with Laravel 4.0 - 4.1 then specify version `1.0.*` instead._
+Next, add the service provider in your `config/app.php` file.
 
-Now, add the Autologin service provider to your `app/config/app.php` file.
+`Watson\Active\ActiveServiceProvider::class`
 
-`'Watson\Active\ActiveServiceProvider'`
+And the facade to the aliases array.
 
-And finally add this to the aliases array.
-
-`'Active' => 'Watson\Active\Facades\Active'`
+`'Active' => Watson\Active\Facades\Active::class`
 
 ## Using Active
 
