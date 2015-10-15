@@ -1,6 +1,6 @@
 <?php
 
-class ActiveTest extends PHPUnit_Framework_TestCase 
+class ActiveTest extends PHPUnit_Framework_TestCase
 {
     protected $active;
 

@@ -3,12 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
-if ( ! function_exists('controller_name'))
-{
-	function controller_name($includeNamespace = true)
-	{
-        if ($action = Route::currentRouteAction())
-        {
+if (! function_exists('controller_name')) {
+    function controller_name($includeNamespace = true)
+    {
+        if ($action = Route::currentRouteAction()) {
             $controller = head(Str::parseCallback($action, null));
 
             // Remove Controller from the controller name.
@@ -25,21 +23,19 @@ if ( ! function_exists('controller_name'))
         }
 
         return null;
-	}
+    }
 }
 
-if ( ! function_exists('action_name'))
-{
-	function action_name()
-	{
-        if ($action = Route::currentRouteAction())
-        {
+if (! function_exists('action_name')) {
+    function action_name()
+    {
+        if ($action = Route::currentRouteAction()) {
             $action = last(Str::parseCallback($action, null));
 
             // Take out the method from the action.
-            return Str::lower(str_replace(array('get', 'post', 'patch', 'put', 'delete'), '', $action));
+            return Str::lower(str_replace(['get', 'post', 'patch', 'put', 'delete'], '', $action));
         }
 
         return null;
-	}
+    }
 }

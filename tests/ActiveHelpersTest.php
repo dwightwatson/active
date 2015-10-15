@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-class ActiveHelpersTest extends PHPUnit_Framework_TestCase 
+class ActiveHelpersTest extends PHPUnit_Framework_TestCase
 {
     public function testControllerNameGetsControllerName()
     {
