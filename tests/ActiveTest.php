@@ -69,6 +69,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     {
         $this->request->shouldReceive('is')->with('pages.*')->andReturn(false);
 
+        $this->request->shouldReceive('is')->with('pages.show')->andReturn(false);
+
         $this->router->shouldReceive('is')->with('pages.*')->andReturn(true);
 
         $this->router->shouldReceive('is')->with('pages.show')->andReturn(true);
