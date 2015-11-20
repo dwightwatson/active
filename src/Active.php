@@ -9,20 +9,6 @@ use Illuminate\Support\Str;
 class Active
 {
     /**
-     * Routes to exlude.
-     *
-     * @var array
-     */
-    protected $excludedRoutes = [];
-
-    /**
-     * Routes to check.
-     *
-     * @var array
-     */
-    protected $routes = [];
-
-    /**
      * Illuminate Request instance.
      *
      * @var \Illuminate\Http\Request
@@ -50,44 +36,122 @@ class Active
     }
 
     /**
-     * Return active class if paths are matched.
+     * Determine if any of the provided routes are active.
      *
-     * @param  mixed   $paths
-     * @param  string  $class
-     * @return mixed
+     * @param  mixed  $routes
+     * @return bool
      */
-    public function path($paths, $class = 'active')
+    public function isActive($routes)
     {
-        return call_user_func_array([$this->request, 'is'], (array) $paths) ? $class : null;
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        list($routes, $ignoredRoutes) = $this->parseIgnoredRoutes($routes);
+
+        if ($this->isPath($routes)) {
+            if ($this->isPath($ignoredRoutes)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        if ($this->isRoute($routes)) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
-     * Return active class if route names are matched.
+     * Get the active class if the active path is provided.
      *
      * @param  mixed   $routes
      * @param  string  $class
-     * @return mixed
+     * @return string|null
      */
-    public function route($routes, $class = 'active')
+    public function active($routes, $class = 'active')
     {
-        return call_user_func_array([$this->router, 'is'], (array) $routes) ? $class : null;
+        $routes = (array) $routes;
+
+        return $this->isActive($routes) ? $class : null;
     }
 
     /**
-     * Return active class if route name and identifier is matched.
+     * Determine if the current path is one of the provided paths.
      *
-     * @param  string  $route
-     * @param  string  $identifier
-     * @param  string  $attribute
-     * @param  string  $class
-     * @return mixed
+     * @param  mixed   $routes
+     * @return boolean
      */
-    public function resource($route, $identifier, $attribute = 'id', $class = 'active')
+    public function isPath($routes)
     {
-        if ($this->route($route)) {
-            if ($this->router->current()->parameters($attribute) == $identifier) {
-                return $class;
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        return call_user_func_array([$this->request, 'is'], $routes);
+    }
+
+    /**
+     * Get the active class if the active path is provided.
+     *
+     * @param  mixed   $routes
+     * @param  string  $class
+     * @return string|null
+     */
+    public function path($routes, $class = 'active')
+    {
+        $routes = (array) $routes;
+
+        return $this->isPath($routes) ? $class : null;
+    }
+
+    /**
+     * Determin if the current route is one of the provided routes.
+     *
+     * @param  mixed  $routes
+     * @return boolean
+     */
+    public function isRoute($routes)
+    {
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        return call_user_func_array([$this->router, 'is'], $routes);
+    }
+
+    /**
+     * Get the active class if the active route is provided.
+     *
+     * @param  mixed   $routes
+     * @param  string  $class
+     * @return string|null
+     */
+    public function route($routes, $class = 'active')
+    {
+        $routes = (array) $routes;
+
+        return $this->isRoute($routes) ? $class : null;
+    }
+
+    /**
+     * Separate ignored routes from the provided routes.
+     *
+     * @param  mixed  $routes
+     * @return array
+     */
+    private function parseIgnoredRoutes($routes)
+    {
+        $ignoredRoutes = [];
+
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        foreach ($routes as $index => $route) {
+            if (Str::startsWith($route, 'not:')) {
+                $ignoredRoute = substr($route, 4);
+
+                unset($routes[$index]);
+
+                $ignoredRoutes[] = $ignoredRoute;
             }
         }
+
+        return [$routes, $ignoredRoutes];
     }
 }

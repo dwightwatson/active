@@ -20,9 +20,7 @@ class ActiveServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('active', function ($app) {
-            return new Active($app['request'], $app['router']);
-        });
+        $this->app->bind('active', Active::class);
     }
 
     /**

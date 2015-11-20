@@ -1,5 +1,9 @@
 <?php
 
+use Watson\Active\Active;
+use Illuminate\Http\Request;
+use Illuminate\Routing\Router;
+
 class ActiveTest extends PHPUnit_Framework_TestCase
 {
     protected $active;
@@ -12,19 +16,108 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->request = Mockery::mock('Illuminate\Http\Request');
+        $this->request = Mockery::mock(Request::class);
 
-        $this->router = Mockery::mock('Illuminate\Routing\Router');
+        $this->router = Mockery::mock(Router::class);
 
-        $this->active = new Watson\Active\Active($this->request, $this->router);
+        $this->active = new Active($this->request, $this->router);
     }
 
     public function tearDown()
     {
+        parent::tearDown();
+        
         Mockery::close();
     }
 
-    public function testPathWithCurrentPath()
+    /** @test */
+    public function is_active_returns_true_when_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(true);
+
+        $this->request->shouldReceive('is')->with()->andReturn(false);
+
+        $result = $this->active->isActive('foo');
+
+        $this->assertTrue($result, "False returned when current path provided.");
+    }
+
+    /** @test */
+    public function is_active_returns_true_when_on_route()
+    {
+        $this->request->shouldReceive('is')->with('home')->andReturn(false);
+
+        $this->router->shouldReceive('is')->with('home')->andReturn(true);
+
+        $result = $this->active->isActive('home');
+
+        $this->assertTrue($result, "False returned when current route provided.");
+    }
+
+    /** @test */
+    public function is_active_returns_false_when_on_ignored_route()
+    {
+        $this->request->shouldReceive('is')->with('foo/*')->andReturn(true);
+
+        $this->request->shouldReceive('is')->with('foo/bar')->andReturn(true);
+
+        $result = $this->active->isActive('foo/*', 'not:foo/bar');
+
+        $this->assertFalse($result, "Returned true when on an ignored path.");
+    }
+
+    /** @test */
+    public function is_active_returns_false_when_not_on_path_or_route()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(false);
+
+        $this->router->shouldReceive('is')->with('foo')->andReturn(false);
+
+        $result = $this->active->isActive('foo');
+
+        $this->assertFalse($result, "Returned true when the current route or path is not provided.");
+    }
+
+
+    /** @test */
+    public function active_returns_active_when_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(true);
+
+        $this->request->shouldReceive('is')->with()->andReturn(false);
+
+        $result = $this->active->active('foo');
+
+        $this->assertEquals('active', $result, "Wrong string returned when current path provided.");
+    }
+
+    /** @test */
+    public function active_returns_provided_string_when_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(true);
+
+        $this->request->shouldReceive('is')->with()->andReturn(false);
+
+        $result = $this->active->active('foo', 'bar');
+
+        $this->assertEquals('bar', $result, "Wrong string returned when current path provided.");
+    }
+
+    /** @test */
+    public function active_returns_null_when_not_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(false);
+
+        $this->router->shouldReceive('is')->with('foo')->andReturn(false);
+
+        $result = $this->active->active('foo');
+
+        $this->assertNull($result, "Returned string when the current route or path is not provided.");    
+    }
+
+
+    /** @test */
+    public function path_returns_active_when_on_path()
     {
         $this->request->shouldReceive('is')->andReturn(true);
 
@@ -33,7 +126,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('active', $result, "Class is not returned when path is matched.");
     }
 
-    public function testPathWithCurrentPathAndClass()
+    /** @test */
+    public function path_returns_provided_string_when_on_path()
     {
         $this->request->shouldReceive('is')->andReturn(true);
 
@@ -42,7 +136,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $result, "Incorrect class is returned when path is matched.");
     }
 
-    public function testPathWithoutCurrentPath()
+    /** @test */
+    public function path_returns_null_when_not_current_path()
     {
         $this->request->shouldReceive('is')->andReturn(false);
 
@@ -51,7 +146,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $this->assertNull($result, "Null is not returend when path is not matched.");
     }
 
-    public function testRouteWithCurrentRoute()
+    /** @test */
+    public function route_returns_active_when_on_route()
     {
         $this->router->shouldReceive('is')->andReturn(true);
 
@@ -60,7 +156,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('active', $result, "Class is not returned when route is matched.");
     }
 
-    public function testRouteWithCurrentRouteAndClass()
+    /** @test */
+    public function route_returns_provided_string_when_on_route()
     {
         $this->router->shouldReceive('is')->andReturn(true);
 
@@ -69,46 +166,13 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $result, "Class is not returned when route is matched.");
     }
 
-    public function testRouteWithoutCurrentRoute()
+    /** @test */
+    public function route_returns_null_when_not_current_route()
     {
         $this->router->shouldReceive('is')->andReturn(false);
 
         $result = $this->active->route('foo');
 
         $this->assertNull($result, "Null is not returned when route is not matched.");
-    }
-
-
-    public function testResourceWithCurrentRoute()
-    {
-        $this->router->shouldReceive('is')->andReturn(true);
-
-        $this->router->shouldReceive('current')
-            ->andReturn(Mockery::mock(['parameters' => 1]));
-
-        $result = $this->active->resource('posts.show', 1);
-
-        $this->assertEquals('active', $result, "Class is not returned when resource is matched.");
-    }
-
-    public function testResourceWithoutCurrentRoute()
-    {
-        $this->router->shouldReceive('is')->andReturn(true);
-
-        $this->router->shouldReceive('current')
-            ->andReturn(Mockery::mock(['parameters' => 2]));
-
-        $result = $this->active->resource('posts.show', 1);
-
-        $this->assertNull($result, "Null is not returned when resource is matched.");
-    }
-
-    public function testResourceWithoutNoRoute()
-    {
-        $this->router->shouldReceive('is')->andReturn(false);
-
-        $result = $this->active->resource('posts.show', 1);
-
-        $this->assertNull($result, "Null is not returned when resource is not matched.");
     }
 }

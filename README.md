@@ -3,7 +3,7 @@ Active for Laravel
 
 [![Build Status](https://travis-ci.org/dwightwatson/active.png?branch=master)](https://travis-ci.org/dwightwatson/active)
 
-Active is a helper package built specifically for Laravel 4.2/5+ that will allow you to recognise the current route, which is helpful for adding 'active' classes (like those used by Bootstrap) and for only performing certain actions on given routes. It also includes helper functions for retrieving the current controller and action names. Inspired by [digithis/activehelper](https://github.com/digithis/activehelper) but written from the ground up to better fit our needs as well as throw in some testing.
+Active is a helper package for Laravel that makes it easy to recoginse the current path or route, useful for adding 'active' classes (like those used in the Boostrap framework) and performing other actions only when a certain route is active. It also includes helpers for retrieving the current controller and action names.
 
 ## Installation
 
@@ -17,53 +17,53 @@ Next, add the service provider in your `config/app.php` file.
 
 `Watson\Active\ActiveServiceProvider::class`
 
-And the facade to the aliases array.
+If you'd like to use the Facade instead of the helper functions, add it to the `aliases` array.
 
 `'Active' => Watson\Active\Facades\Active::class`
 
 ## Using Active
 
-There are two ways you can use Active, first by passing in paths and second by passing in named routes. It depends on the structure of your application and how specific you want to be.
+### Helper functions
 
-### Using paths
+Active ships with a couple of helper functions which make it easy to use without the facade or creating an instance of your own.
 
-What if you want to know whether you're on a path for the purpose of activating a CSS class? Well, you're sorted. By default, it will return the string 'active', so you can use it as a class.
+```php
+active()
 
-    // On /posts/1
-    Active::path('posts/1'); // active
+is_active()
+```
 
-    <a href="posts/1" class="{{ Active::path('posts/1') }}">1st Post</a>
+### Using `active()`
 
-Of course, you can still use the array version if you like.
+You pass an array of routes or paths you want to see are the current page, and if any match this function will return the string `active`, for Bootstrap. Alternatively, you can pass a custom return string as the second argument.
 
-    // On /posts/1
-    Active::path(array('posts/1', 'users/1')); // active
+```php
+active(['login', 'users/*', 'posts.create'], 'active-class');
+```
 
-And pass in custom classes.
+In this example, the function will return the string `active-class` if the current path is `login`, starts with `users/` or if the name of the current route is `posts.create`.
 
-    // On /posts/1
-    Active::path('posts/1', 'chickens'); // chickens
+Do note that a number of argument types are provided: you can use a path string, you can use a path string with a wildcard (using the `*`) and you can also use named routes.
 
-### Using named routes
+You can use this function with your links to give them an active state.
 
-However, if you're more like me, you can use named routes. Gives you a bit more control if you're not interested exactly which record a user is looking at, just that they are looking at that kind of record. LIke `paths()`, this returns an `active` class if the route is matched.
+```php
+<a href="{{ route('posts.index') }}" class="{{ active('posts.index') }}">All posts</a>
+```
 
-    // On posts (named posts.index)
-    Active::route('posts.index'); // active
+### Using `is_active()`
 
-And the array version works also.
+This works much the same as `active()`, you can pass the paths and routes to it but instead it will return a boolean if the current page matches. 
 
-    // On a post (named posts.show)
-    Active::route(array('posts.index', 'posts.show')); // active
+```php
+@if (is_active('posts/*'))
+    You're looking at a blog post!
+@endif
+```
 
-And pass in custom classes.
+### Additional helpers
 
-    // On a post (named posts.show)
-    Active::route('posts.show', 'chocolate'); // chocolate
-
-## Helper functions
-
-Two helper methods are provided to get the current controller and action, if your routing is being handled by a controller for a request. These functions will return the lowercase controller/action name, without the method of the request. Here is an example for a request that is routed to `FooController@getBar':
+Two additional functions are provided to get the current controller and action, if your routing is being handled by a controller for a request. These functions will return the lowercase controller/action name, without the method of the request. Here is an example for a request that is routed to `FooController@getBar':
 
     $controller = controller_name(); // foo
 
