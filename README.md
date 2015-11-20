@@ -42,7 +42,7 @@ is_active()
 You pass an array of routes or paths you want to see are the current page, and if any match this function will return the string `active`, for Bootstrap. Alternatively, you can pass a custom return string as the second argument.
 
 ```php
-active(['login', 'users/*', 'posts.create'], 'active-class');
+active(['login', 'users/*', 'posts.*', 'pages.contact'], 'active-class');
 ```
 
 In this example, the function will return the string `active-class` if the current path is `login`, starts with `users/` or if the name of the current route is `posts.create`.
@@ -53,6 +53,14 @@ You can use this function with your links to give them an active state.
 
 ```php
 <a href="{{ route('posts.index') }}" class="{{ active('posts.index') }}">All posts</a>
+```
+
+You can also provide certain paths or routes to be exluded when being considered.
+
+```php
+active(['pages/*', 'not:pages/contact'])
+
+active(['pages.*', 'not:pages.contact'])
 ```
 
 ### Using `is_active()`
