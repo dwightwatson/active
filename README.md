@@ -2,6 +2,10 @@ Active for Laravel
 ==================
 
 [![Build Status](https://travis-ci.org/dwightwatson/active.png?branch=master)](https://travis-ci.org/dwightwatson/active)
+[![Total Downloads](https://poser.pugx.org/watson/active/downloads.svg)](https://packagist.org/packages/watson/active)
+[![Latest Stable Version](https://poser.pugx.org/watson/active/v/stable.svg)](https://packagist.org/packages/watson/active)
+[![Latest Unstable Version](https://poser.pugx.org/watson/active/v/unstable.svg)](https://packagist.org/packages/watson/active)
+[![License](https://poser.pugx.org/watson/active/license.svg)](https://packagist.org/packages/watson/active)
 
 Active is a helper package for Laravel that makes it easy to recoginse the current path or route, useful for adding 'active' classes (like those used in the Boostrap framework) and performing other actions only when a certain route is active. It also includes helpers for retrieving the current controller and action names.
 
@@ -65,6 +69,8 @@ This works much the same as `active()`, you can pass the paths and routes to it 
 
 Two additional functions are provided to get the current controller and action, if your routing is being handled by a controller for a request. These functions will return the lowercase controller/action name, without the method of the request. Here is an example for a request that is routed to `FooController@getBar':
 
-    $controller = controller_name(); // foo
+```php
+$controller = controller_name(); // foo
 
-    $action = action_name(); // bar
+$action = action_name(); // bar
+```
