@@ -1,6 +1,6 @@
 {
     "name": "watson/active",
-    "description": "Laravel 4 helper for recognising the current route, controller and action",
+    "description": "Laravel helper for recognising the current route, controller and action",
     "keywords": ["laravel", "active", "routing"],
     "license": "MIT",
     "authors": [
