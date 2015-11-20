@@ -48,7 +48,7 @@ class Active
         list($routes, $ignoredRoutes) = $this->parseIgnoredRoutes($routes);
 
         if ($this->isPath($routes)) {
-            if ($this->isPath($ignoredRoutes)) {
+            if (count($ignoredRoutes) && $this->isPath($ignoredRoutes)) {
                 return false;
             }
 
@@ -56,6 +56,10 @@ class Active
         }
 
         if ($this->isRoute($routes)) {
+            if (count($ignoredRoutes) && $this->isRoute($ignoredRoutes)) {
+                return false;
+            }
+
             return true;
         }
 

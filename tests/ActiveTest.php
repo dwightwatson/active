@@ -35,8 +35,6 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(true);
 
-        $this->request->shouldReceive('is')->with()->andReturn(false);
-
         $result = $this->active->isActive('foo');
 
         $this->assertTrue($result, "False returned when current path provided.");
@@ -55,7 +53,7 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function is_active_returns_false_when_on_ignored_route()
+    public function is_active_returns_false_when_on_ignored_path()
     {
         $this->request->shouldReceive('is')->with('foo/*')->andReturn(true);
 
@@ -64,6 +62,20 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         $result = $this->active->isActive('foo/*', 'not:foo/bar');
 
         $this->assertFalse($result, "Returned true when on an ignored path.");
+    }
+
+    /** @test */
+    public function is_active_returns_false_when_on_ignored_route()
+    {
+        $this->request->shouldReceive('is')->with('pages.*')->andReturn(false);
+
+        $this->router->shouldReceive('is')->with('pages.*')->andReturn(true);
+
+        $this->router->shouldReceive('is')->with('pages.show')->andReturn(true);
+
+        $result = $this->active->isActive('pages.*', 'not:pages.show');
+
+        $this->assertFalse($result, "Returned true when on an ignored route.");
     }
 
     /** @test */
