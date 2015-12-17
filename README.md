@@ -33,7 +33,6 @@ Active ships with a couple of helper functions which make it easy to use without
 
 ```php
 active()
-
 is_active()
 ```
 
@@ -42,10 +41,12 @@ is_active()
 You pass an array of routes or paths you want to see are the current page, and if any match this function will return the string `active`, for Bootstrap. Alternatively, you can pass a custom return string as the second argument.
 
 ```php
-active(['login', 'users/*', 'posts.*', 'pages.contact'], 'active-class');
+active('login', 'users/*', 'posts.*', 'pages.contact'); // Returns 'active' if the current route matches any path or route name.
+
+active(['login', 'logout'], 'active-class'); // Returns 'active-class' if the current route is 'login' or 'logout'.
 ```
 
-In this example, the function will return the string `active-class` if the current path is `login`, starts with `users/` or if the name of the current route is `posts.create`.
+In the first example, the function will return the string `active` if the current path is `login`, starts with `users/` or if the name of the current route is `posts.create`.
 
 Do note that a number of argument types are provided: you can use a path string, you can use a path string with a wildcard (using the `*`) and you can also use named routes.
 
