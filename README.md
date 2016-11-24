@@ -41,7 +41,7 @@ is_active()
 You pass an array of routes or paths you want to see are the current page, and if any match this function will return the string `active`, for Bootstrap. Alternatively, you can pass a custom return string as the second argument.
 
 ```php
-active('login', 'users/*', 'posts.*', 'pages.contact'); // Returns 'active' if the current route matches any path or route name.
+active(['login', 'users/*', 'posts.*', 'pages.contact']); // Returns 'active' if the current route matches any path or route name.
 
 active(['login', 'logout'], 'active-class'); // Returns 'active-class' if the current route is 'login' or 'logout'.
 ```
@@ -66,7 +66,7 @@ active(['pages.*', 'not:pages.contact'])
 
 ### Using `is_active()`
 
-This works much the same as `active()`, you can pass the paths and routes to it but instead it will return a boolean if the current page matches. 
+This works much the same as `active()`, you can pass the paths and routes to it but instead it will return a boolean if the current page matches.
 
 ```php
 @if (is_active('posts/*'))
