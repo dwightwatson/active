@@ -3,6 +3,7 @@
 use Watson\Active\Active;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Config\Repository;
 
 class ActiveTest extends PHPUnit_Framework_TestCase
 {
@@ -17,16 +18,16 @@ class ActiveTest extends PHPUnit_Framework_TestCase
         parent::setUp();
 
         $this->request = Mockery::mock(Request::class);
-
         $this->router = Mockery::mock(Router::class);
+        $this->config = Mockery::mock(Repository::class);
 
-        $this->active = new Active($this->request, $this->router);
+        $this->active = new Active($this->request, $this->router, $this->config);
     }
 
     public function tearDown()
     {
         parent::tearDown();
-        
+
         Mockery::close();
     }
 
@@ -100,7 +101,21 @@ class ActiveTest extends PHPUnit_Framework_TestCase
 
         $this->request->shouldReceive('is')->with()->andReturn(false);
 
+        $this->config->shouldReceive('get')->with('active.class')->once()->andReturn('active');
+
         $result = $this->active->active('foo');
+
+        $this->assertEquals('active', $result, "Wrong string returned when current path provided.");
+    }
+
+    /** @test */
+    public function active_returns_provided_class_when_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(true);
+
+        $this->request->shouldReceive('is')->with()->andReturn(false);
+
+        $result = $this->active->active('foo', 'active');
 
         $this->assertEquals('active', $result, "Wrong string returned when current path provided.");
     }
@@ -126,7 +141,7 @@ class ActiveTest extends PHPUnit_Framework_TestCase
 
         $result = $this->active->active('foo');
 
-        $this->assertNull($result, "Returned string when the current route or path is not provided.");    
+        $this->assertNull($result, "Returned string when the current route or path is not provided.");
     }
 
 
@@ -134,6 +149,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function path_returns_active_when_on_path()
     {
         $this->request->shouldReceive('is')->andReturn(true);
+
+        $this->config->shouldReceive('get')->with('active.class')->once()->andReturn('active');
 
         $result = $this->active->path('foo');
 
@@ -164,6 +181,8 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function route_returns_active_when_on_route()
     {
         $this->router->shouldReceive('is')->andReturn(true);
+
+        $this->config->shouldReceive('get')->with('active.class')->once()->andReturn('active');
 
         $result = $this->active->route('foo');
 
