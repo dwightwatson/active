@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 namespace Watson\Active;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Str;
+use Illuminate\Config\Repository;
 
 class Active
 {
@@ -22,17 +23,26 @@ class Active
      */
     protected $router;
 
-    /** 
+    /**
+     * Illuminate Config instance.
+     *
+     * @var \Illuminate\Config\Repository
+     */
+    protected $config;
+
+    /**
      * Construct the class.
      *
-     * @param  \Illuminate\Http\Request    $request
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Http\Request       $request
+     * @param  \Illuminate\Routing\Router     $router
+     * @param  \Illuminate\Config\Repository  $config
      * @return void
      */
-    public function __construct(Request $request, Router $router)
+    public function __construct(Request $request, Router $router, Repository $config)
     {
         $this->request = $request;
         $this->router = $router;
+        $this->config = $config;
     }
 
     /**
@@ -65,11 +75,13 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function active($routes, $class = 'active')
+    public function active($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isActive($routes) ? $class : null;
+        if ($this->isActive($routes)) {
+            return $this->getActiveClass($class);
+        }
     }
 
     /**
@@ -92,11 +104,13 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function path($routes, $class = 'active')
+    public function path($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isPath($routes) ? $class : null;
+        if ($this->isPath($routes)) {
+            return $this->getActiveClass($class);
+        }
     }
 
     /**
@@ -119,11 +133,25 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function route($routes, $class = 'active')
+    public function route($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isRoute($routes) ? $class : null;
+        if ($this->isRoute($routes)) {
+            return $this->getActiveClass($class);
+        }
+    }
+
+    /**
+     * Return the active class if it is provided, otherwise fall back
+     * to the class set in the configuration.
+     *
+     * @param  string  $class
+     * @return string
+     */
+    protected function getActiveClass($class = null)
+    {
+        return $class ?: $this->config->get('active.class');
     }
 
     /**

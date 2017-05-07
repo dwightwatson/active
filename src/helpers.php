@@ -39,7 +39,7 @@ if ( ! function_exists('active')) {
      * @param  string  $class
      * @return string|null
      */
-    function active($routes = null, $class = 'active')
+    function active($routes = null, $class = null)
     {
         if (is_null($routes)) {
             return App::make('active');
