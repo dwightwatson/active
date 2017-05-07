@@ -21,6 +21,22 @@ class ActiveServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind('active', Active::class);
+
+        $this->mergeConfigFrom(
+            __DIR__ . '/config/config.php', 'active'
+        );
+    }
+
+    /**
+     * Bootstrap the application events.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        $this->publishes([
+            __DIR__ . '/config/config.php' => config_path('active.php'),
+        ], 'config');
     }
 
     /**

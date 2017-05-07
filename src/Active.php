@@ -4,6 +4,7 @@ namespace Watson\Active;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 
 class Active
@@ -65,11 +66,15 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function active($routes, $class = 'active')
+    public function active($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isActive($routes) ? $class : null;
+        if ($this->isActive($routes)) {
+            return $class ?: Config::get('active.class');
+        }
+
+        return null;
     }
 
     /**
@@ -92,11 +97,15 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function path($routes, $class = 'active')
+    public function path($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isPath($routes) ? $class : null;
+        if ($this->isPath($routes)) {
+            return $class ?: Config::get('active.class');
+        }
+
+        return null;
     }
 
     /**
@@ -119,11 +128,15 @@ class Active
      * @param  string  $class
      * @return string|null
      */
-    public function route($routes, $class = 'active')
+    public function route($routes, $class = null)
     {
         $routes = (array) $routes;
 
-        return $this->isRoute($routes) ? $class : null;
+        if ($this->isRoute($routes)) {
+            return $class ?: Config::get('active.class');
+        }
+
+        return null;
     }
 
     /**
