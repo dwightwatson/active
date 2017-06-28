@@ -42,10 +42,21 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
+    public function is_active_returns_true_when_on_full_path()
+    {
+        $this->request->shouldReceive('is')->with('/foo')->andReturn(true);
+        $this->request->shouldReceive('fullUrlIs')->with('/foo')->andReturn(true);
+
+        $result = $this->active->isActive('/foo');
+
+        $this->assertTrue($result, "False returned when current path provided.");
+    }
+
+    /** @test */
     public function is_active_returns_true_when_on_route()
     {
         $this->request->shouldReceive('is')->with('home')->andReturn(false);
-
+        $this->request->shouldReceive('fullUrlIs')->with('home')->andReturn(false);
         $this->router->shouldReceive('is')->with('home')->andReturn(true);
 
         $result = $this->active->isActive('home');
@@ -57,7 +68,6 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function is_active_returns_false_when_on_ignored_path()
     {
         $this->request->shouldReceive('is')->with('foo/*')->andReturn(true);
-
         $this->request->shouldReceive('is')->with('foo/bar')->andReturn(true);
 
         $result = $this->active->isActive('foo/*', 'not:foo/bar');
@@ -69,11 +79,11 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function is_active_returns_false_when_on_ignored_route()
     {
         $this->request->shouldReceive('is')->with('pages.*')->andReturn(false);
-
         $this->request->shouldReceive('is')->with('pages.show')->andReturn(false);
+        $this->request->shouldReceive('fullUrlIs')->with('pages.*')->andReturn(false);
+        $this->request->shouldReceive('fullUrlIs')->with('pages.show')->andReturn(false);
 
         $this->router->shouldReceive('is')->with('pages.*')->andReturn(true);
-
         $this->router->shouldReceive('is')->with('pages.show')->andReturn(true);
 
         $result = $this->active->isActive('pages.*', 'not:pages.show');
@@ -85,7 +95,7 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function is_active_returns_false_when_not_on_path_or_route()
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(false);
-
+        $this->request->shouldReceive('fullUrlIs')->with('foo')->andReturn(false);
         $this->router->shouldReceive('is')->with('foo')->andReturn(false);
 
         $result = $this->active->isActive('foo');
@@ -98,7 +108,6 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function active_returns_active_when_on_path()
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(true);
-
         $this->request->shouldReceive('is')->with()->andReturn(false);
 
         $this->config->shouldReceive('get')->with('active.class')->once()->andReturn('active');
@@ -112,7 +121,6 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function active_returns_provided_class_when_on_path()
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(true);
-
         $this->request->shouldReceive('is')->with()->andReturn(false);
 
         $result = $this->active->active('foo', 'active');
@@ -124,7 +132,6 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function active_returns_provided_string_when_on_path()
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(true);
-
         $this->request->shouldReceive('is')->with()->andReturn(false);
 
         $result = $this->active->active('foo', 'bar');
@@ -136,7 +143,7 @@ class ActiveTest extends PHPUnit_Framework_TestCase
     public function active_returns_null_when_not_on_path()
     {
         $this->request->shouldReceive('is')->with('foo')->andReturn(false);
-
+        $this->request->shouldReceive('fullUrlIs')->with('foo')->andReturn(false);
         $this->router->shouldReceive('is')->with('foo')->andReturn(false);
 
         $result = $this->active->active('foo');

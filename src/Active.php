@@ -57,8 +57,8 @@ class Active
 
         list($routes, $ignoredRoutes) = $this->parseIgnoredRoutes($routes);
 
-        if ($this->isPath($routes) || $this->isRoute($routes)) {
-            if (count($ignoredRoutes) && ($this->isPath($ignoredRoutes) || $this->isRoute($ignoredRoutes))) {
+        if ($this->isPath($routes) || $this->isFullPath($routes) || $this->isRoute($routes)) {
+            if (count($ignoredRoutes) && ($this->isPath($ignoredRoutes) || $this->isFullPath($routes) || $this->isRoute($ignoredRoutes))) {
                 return false;
             }
 
@@ -95,6 +95,19 @@ class Active
         $routes = is_array($routes) ? $routes : func_get_args();
 
         return call_user_func_array([$this->request, 'is'], $routes);
+    }
+
+    /**
+     * Determine if the current full path is one of the provided paths.
+     *
+     * @param  mixed   $routes
+     * @return boolean
+     */
+    public function isFullPath($routes)
+    {
+        $routes = is_array($routes) ? $routes : func_get_args();
+
+        return call_user_func_array([$this->request, 'fullUrlIs'], $routes);
     }
 
     /**
