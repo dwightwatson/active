@@ -29,7 +29,7 @@ class Route
      * Get the controller name, separated as necessary and with or without namespaces.
      *
      * @param  string  $separator
-     * @param  bool    $includeNamespaces
+     * @param  bool    $includeNamespace
      * @param  string  $trimNamespace
      * @return string|null
      */

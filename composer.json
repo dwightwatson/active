@@ -28,5 +28,15 @@
             "src/helpers.php"
         ]
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Watson\\Active\\ActiveServiceProvider"
+            ],
+            "aliases": {
+                "Active": "Watson\\Watson\\Facades\\Active"
+            }
+        }
+    },
     "minimum-stability": "stable"
 }
