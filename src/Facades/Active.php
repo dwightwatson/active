@@ -15,6 +15,6 @@ class Active extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return \Watson\Active\Active::class;
+        return 'active';
     }
 }
