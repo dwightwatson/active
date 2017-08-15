@@ -7,7 +7,7 @@ Active for Laravel
 [![Latest Unstable Version](https://poser.pugx.org/watson/active/v/unstable.svg)](https://packagist.org/packages/watson/active)
 [![License](https://poser.pugx.org/watson/active/license.svg)](https://packagist.org/packages/watson/active)
 
-Active is a helper package for Laravel that makes it easy to recoginse the current path or route, useful for adding 'active' classes (like those used in the Boostrap framework) and performing other actions only when a certain route is active. It also includes helpers for retrieving the current controller and action names.
+Active is a helper package for Laravel that makes it easy to recognize the current path or route, useful for adding 'active' classes (like those used in the Boostrap framework) and performing other actions only when a certain route is active. It also includes helpers for retrieving the current controller and action names.
 
 ## Installation
 
