@@ -17,6 +17,8 @@ First, simply require the package through Composer.
 composer require watson/active
 ```
 
+**Using Laravel 5.1? The latest version of the package that will work for you is 2.0.4.**
+
 Next, add the service provider in your `config/app.php` file.
 
 `Watson\Active\ActiveServiceProvider::class`
