@@ -1,5 +1,5 @@
 {
-  "name": "watson/active",
+  "name": "tabuna/active",
   "description": "Laravel helper for recognising the current route, controller and action",
   "keywords": [
     "laravel",
