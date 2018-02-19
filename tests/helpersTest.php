@@ -46,7 +46,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase
     {
         $activeMock = Mockery::mock(Active::class);
 
-        App::shouldReceive('make')->once()->with('active')->andReturn($activeMock);
+        App::shouldReceive('make')->once()->with(Active::class)->andReturn($activeMock);
 
         $result = active();
 
@@ -60,7 +60,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase
 
         $activeMock->shouldReceive('active')->once()->with(['foo'], 'bar')->andReturn('baz');
 
-        App::shouldReceive('make')->once()->with('active')->andReturn($activeMock);
+        App::shouldReceive('make')->once()->with(Active::class)->andReturn($activeMock);
 
         $result = active('foo', 'bar');
 
@@ -74,7 +74,7 @@ class HelpersTest extends PHPUnit_Framework_TestCase
 
         $activeMock->shouldReceive('isActive')->once()->with(['foo'])->andReturn('bar');
 
-        App::shouldReceive('make')->once()->with('active')->andReturn($activeMock);
+        App::shouldReceive('make')->once()->with(Active::class)->andReturn($activeMock);
 
         $result = is_active('foo');
 

@@ -18,7 +18,7 @@ class ActiveServiceProvider extends ServiceProvider
         });
 
         $this->mergeConfigFrom(
-            __DIR__ . '/config/config.php', 'active'
+            realpath(__DIR__ . '/../config/config.php'), 'active'
         );
     }
 

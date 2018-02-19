@@ -32,10 +32,7 @@
         "laravel": {
             "providers": [
                 "Watson\\Active\\ActiveServiceProvider"
-            ],
-            "aliases": {
-                "Active": "Watson\\Watson\\Facades\\Active"
-            }
+            ]
         }
     },
     "minimum-stability": "stable"
