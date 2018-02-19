@@ -1,10 +1,11 @@
 <?php
 
-use Watson\Active\Route;
-use Watson\Active\Active;
 use Illuminate\Support\Facades\App;
+use PHPUnit\Framework\TestCase;
+use Watson\Active\Active;
+use Watson\Active\Route;
 
-class HelpersTest extends PHPUnit_Framework_TestCase
+class HelpersTest extends TestCase
 {
     public function tearDown()
     {

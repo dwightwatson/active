@@ -1,16 +1,16 @@
 <?php
 
-use Watson\Active\Route;
-use Watson\Active\Active;
 use Illuminate\Support\Facades\App;
+use Watson\Active\Active;
+use Watson\Active\Route;
 
-if ( ! function_exists('controller_name')) {
+if (!function_exists('controller_name')) {
     /**
      * Get the controller name, separated as necessary and with or without namespaces.
      *
-     * @param  string  $separator
-     * @param  bool    $includeNamespace
-     * @param  string  $trimNamespace
+     * @param  string $separator
+     * @param  bool   $includeNamespace
+     * @param  string $trimNamespace
      * @return string|null
      */
     function controller_name($separator = null, $includeNamespace = true, $trimNamespace = 'App\Http\Controllers\\')
@@ -19,11 +19,11 @@ if ( ! function_exists('controller_name')) {
     }
 }
 
-if ( ! function_exists('action_name')) {
+if (!function_exists('action_name')) {
     /**
      * Get the current controller action name.
      *
-     * @param  bool  $removeHttpMethod
+     * @param  bool $removeHttpMethod
      * @return string|null
      */
     function action_name($removeHttpMethod = true)
@@ -32,12 +32,12 @@ if ( ! function_exists('action_name')) {
     }
 }
 
-if ( ! function_exists('active')) {
+if (!function_exists('active')) {
     /**
      * Get the active class if an active path is provided.
      *
-     * @param  mixed   $routes
-     * @param  string  $class
+     * @param  mixed  $routes
+     * @param  string $class
      * @return string|null
      */
     function active($routes = null, $class = null)
@@ -53,11 +53,11 @@ if ( ! function_exists('active')) {
     }
 }
 
-if ( ! function_exists('is_active')) {
+if (!function_exists('is_active')) {
     /**
      * Determine if any of the provided routes are active.
      *
-     * @param  mixed  $routes
+     * @param  mixed $routes
      * @return bool
      */
     function is_active($routes)

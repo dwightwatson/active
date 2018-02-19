@@ -1,11 +1,12 @@
 <?php
 
-use Watson\Active\Active;
+use Illuminate\Config\Repository;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
-use Illuminate\Config\Repository;
+use PHPUnit\Framework\TestCase;
+use Watson\Active\Active;
 
-class ActiveTest extends PHPUnit_Framework_TestCase
+class ActiveTest extends TestCase
 {
     protected $active;
 

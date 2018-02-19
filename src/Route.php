@@ -6,7 +6,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
 
 class Route
-{    
+{
     /**
      * Illuminate Router instance.
      *
@@ -14,10 +14,10 @@ class Route
      */
     protected $router;
 
-    /** 
+    /**
      * Construct the class.
      *
-     * @param  \Illuminate\Routing\Router  $router
+     * @param  \Illuminate\Routing\Router $router
      * @return void
      */
     public function __construct(Router $router)
@@ -28,9 +28,9 @@ class Route
     /**
      * Get the controller name, separated as necessary and with or without namespaces.
      *
-     * @param  string  $separator
-     * @param  bool    $includeNamespace
-     * @param  string  $trimNamespace
+     * @param  string $separator
+     * @param  bool   $includeNamespace
+     * @param  string $trimNamespace
      * @return string|null
      */
     public function controller($separator = null, $includeNamespace = true, $trimNamespace = 'App\Http\Controllers\\')
@@ -46,8 +46,8 @@ class Route
             }
 
             // If the controller contains 'Controller' at the end, remove it.
-            if (substr($controller, - strlen('Controller')) === 'Controller') {
-                $controller = substr($controller, 0, - strlen('Controller'));
+            if (substr($controller, -strlen('Controller')) === 'Controller') {
+                $controller = substr($controller, 0, -strlen('Controller'));
             }
 
             // Separate out nested controller resources.
@@ -65,7 +65,7 @@ class Route
     /**
      * Get the current controller action name.
      *
-     * @param  bool  $removeHttpMethod
+     * @param  bool $removeHttpMethod
      * @return string|null
      */
     public function action($removeHttpMethod = true)
