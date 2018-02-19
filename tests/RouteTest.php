@@ -1,9 +1,10 @@
 <?php
 
-use Watson\Active\Route;
 use Illuminate\Routing\Router;
+use PHPUnit\Framework\TestCase;
+use Watson\Active\Route;
 
-class RouteTest extends PHPUnit_Framework_TestCase
+class RouteTest extends TestCase
 {
     protected $route;
 
@@ -21,7 +22,7 @@ class RouteTest extends PHPUnit_Framework_TestCase
     public function tearDown()
     {
         parent::tearDown();
-        
+
         Mockery::close();
     }
 
