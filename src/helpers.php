@@ -1,6 +1,7 @@
 <?php
 
 use Watson\Active\Route;
+use Watson\Active\Active;
 use Illuminate\Support\Facades\App;
 
 if ( ! function_exists('controller_name')) {
@@ -41,8 +42,9 @@ if ( ! function_exists('active')) {
      */
     function active($routes = null, $class = null)
     {
+
         if (is_null($routes)) {
-            return App::make('active');
+            return App::make(Active::class);
         }
 
         $routes = is_array($routes) ? $routes : [$routes];
