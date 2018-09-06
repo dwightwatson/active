@@ -46,6 +46,8 @@ You pass an array of routes or paths you want to see are the current page, and i
 active(['login', 'users/*', 'posts.*', 'pages.contact']); // Returns 'active' if the current route matches any path or route name.
 
 active(['login', 'logout'], 'active-class'); // Returns 'active-class' if the current route is 'login' or 'logout'.
+
+active(['login', 'logout'], 'active-class', 'fallback-class'); // Returns 'fallback-class' if the current route is not 'login' or 'logout'.
 ```
 
 In the first example, the function will return the string `active` if the current path is `login`, starts with `users/` or if the name of the current route is `posts.create`.
