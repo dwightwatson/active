@@ -35,11 +35,12 @@ if ( ! function_exists('active')) {
     /**
      * Get the active class if an active path is provided.
      *
-     * @param  mixed   $routes
-     * @param  string  $class
+     * @param  mixed $routes
+     * @param  string $class
+     * @param null $fallbackClass
      * @return string|null
      */
-    function active($routes = null, $class = null)
+    function active($routes = null, $class = null, $fallbackClass = null)
     {
         if (is_null($routes)) {
             return App::make('active');
@@ -47,7 +48,7 @@ if ( ! function_exists('active')) {
 
         $routes = is_array($routes) ? $routes : [$routes];
 
-        return active()->active($routes, $class);
+        return active()->active($routes, $class, $fallbackClass);
     }
 }
 

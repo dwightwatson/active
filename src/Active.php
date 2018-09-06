@@ -71,16 +71,20 @@ class Active
     /**
      * Get the active class if the active path is provided.
      *
-     * @param  mixed   $routes
-     * @param  string  $class
+     * @param  mixed $routes
+     * @param  string $class
+     * @param null $fallbackClass
      * @return string|null
      */
-    public function active($routes, $class = null)
+    public function active($routes, $class = null, $fallbackClass = null)
     {
         $routes = (array) $routes;
 
         if ($this->isActive($routes)) {
             return $this->getActiveClass($class);
+        }
+        if ($fallbackClass) {
+            return $fallbackClass;
         }
     }
 
