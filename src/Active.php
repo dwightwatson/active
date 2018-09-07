@@ -73,7 +73,7 @@ class Active
      *
      * @param  mixed $routes
      * @param  string $class
-     * @param null $fallbackClass
+     * @param  null  $fallbackClass
      * @return string|null
      */
     public function active($routes, $class = null, $fallbackClass = null)
@@ -83,6 +83,7 @@ class Active
         if ($this->isActive($routes)) {
             return $this->getActiveClass($class);
         }
+
         if ($fallbackClass) {
             return $fallbackClass;
         }

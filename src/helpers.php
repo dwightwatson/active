@@ -37,7 +37,7 @@ if ( ! function_exists('active')) {
      *
      * @param  mixed $routes
      * @param  string $class
-     * @param null $fallbackClass
+     * @param  null  $fallbackClass
      * @return string|null
      */
     function active($routes = null, $class = null, $fallbackClass = null)

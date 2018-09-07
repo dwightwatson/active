@@ -59,7 +59,7 @@ class HelpersTest extends TestCase
     {
         $activeMock = Mockery::mock(Active::class);
 
-        $activeMock->shouldReceive('active')->once()->with(['foo'], 'bar')->andReturn('baz');
+        $activeMock->shouldReceive('active')->once()->with(['foo'], 'bar', null)->andReturn('baz');
 
         App::shouldReceive('make')->once()->with('active')->andReturn($activeMock);
 
