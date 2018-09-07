@@ -152,6 +152,18 @@ class ActiveTest extends TestCase
         $this->assertNull($result, "Returned string when the current route or path is not provided.");
     }
 
+    /** @test */
+    public function active_returns_fallback_when_not_on_path()
+    {
+        $this->request->shouldReceive('is')->with('foo')->andReturn(false);
+        $this->request->shouldReceive('fullUrlIs')->with('foo')->andReturn(false);
+        $this->router->shouldReceive('is')->with('foo')->andReturn(false);
+
+        $result = $this->active->active('foo', 'active', 'inactive');
+
+        $this->assertEquals('inactive', $result);
+    }
+
 
     /** @test */
     public function path_returns_active_when_on_path()
