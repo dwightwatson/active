@@ -10,7 +10,7 @@ class RouteTest extends TestCase
 
     protected $router;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -19,7 +19,7 @@ class RouteTest extends TestCase
         $this->route = new Route($this->router);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

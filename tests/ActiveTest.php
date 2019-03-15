@@ -14,7 +14,7 @@ class ActiveTest extends TestCase
 
     protected $router;
 
-    public function setUp()
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -25,7 +25,7 @@ class ActiveTest extends TestCase
         $this->active = new Active($this->request, $this->router, $this->config);
     }
 
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 

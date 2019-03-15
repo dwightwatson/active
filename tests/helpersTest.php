@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\App;
 
 class HelpersTest extends TestCase
 {
-    public function tearDown()
+    protected function tearDown(): void
     {
         parent::tearDown();
 
