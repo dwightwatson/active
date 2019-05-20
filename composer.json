@@ -10,7 +10,7 @@
         }
     ],
     "require": {
-        "php": ">=7.2",
+        "php": "^7.1",
         "illuminate/config": "~5.5",
         "illuminate/http": "~5.5",
         "illuminate/routing": "~5.5",
