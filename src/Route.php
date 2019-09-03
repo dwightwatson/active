@@ -51,7 +51,7 @@ class Route
             }
 
             // Separate out nested controller resources.
-            $controller = str_replace('_', $separator, snake_case($controller));
+            $controller = str_replace('_', $separator, Str::snake($controller));
 
             // Either separate out the namespaces or remove them.
             $controller = $includeNamespace ? str_replace('\\', null, $controller) : substr(strrchr($controller, '\\'), 1);
