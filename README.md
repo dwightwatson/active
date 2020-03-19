@@ -6,6 +6,8 @@ Active for Laravel
 [![Latest Stable Version](https://poser.pugx.org/watson/active/v/stable.svg)](https://packagist.org/packages/watson/active)
 [![Latest Unstable Version](https://poser.pugx.org/watson/active/v/unstable.svg)](https://packagist.org/packages/watson/active)
 [![License](https://poser.pugx.org/watson/active/license.svg)](https://packagist.org/packages/watson/active)
+[![Buy us a tree](https://img.shields.io/badge/Treeware-%F0%9F%8C%B3-lightgreen)](https://plant.treeware.earth/dwightwatson/active)
+
 
 Active is a helper package for Laravel that makes it easy to recognize the current path or route, useful for adding 'active' classes (like those used in the Boostrap framework) and performing other actions only when a certain route is active. It also includes helpers for retrieving the current controller and action names.
 
@@ -87,3 +89,10 @@ $controller = controller_name(); // foo
 
 $action = action_name(); // bar
 ```
+
+
+## Licence
+
+Active for Laravel is 100% free and open-source, under the [MIT license](LICENSE.txt). Use it however you want.
+
+This package is [Treeware](https://treeware.earth). If you use it in production, then we ask that you [**buy the world a tree**](https://plant.treeware.earth/dwightwatson/active) to thank us for our work. By contributing to the Treeware forest you’ll be creating employment for local families and restoring wildlife habitats.
