@@ -54,7 +54,7 @@ class Route
             $controller = str_replace('_', $separator, Str::snake($controller));
 
             // Either separate out the namespaces or remove them.
-            $controller = $includeNamespace ? str_replace('\\', null, $controller) : substr(strrchr($controller, '\\'), 1);
+            $controller = $includeNamespace ? str_replace('\\', '', $controller) : substr(strrchr($controller, '\\'), 1);
 
             return trim($controller);
         }
