@@ -14,6 +14,8 @@ class ActiveTest extends TestCase
 
     protected $router;
 
+    protected $config;
+
     protected function setUp(): void
     {
         parent::setUp();
